@@ -4,6 +4,7 @@ from math import floor as floor
 from math import sqrt as sqrt
 from scipy.special import erfc as erfc
 from scipy.special import gammaincc as gammaincc
+from scipy.spatial.distance import hamming
 
 import numpy as np
 
@@ -23,25 +24,17 @@ class FHD:
         #compute length of input data, needed for normalizing. check both arrays have same length.
         input_length = len(flat_array_1)
         if len(flat_array_2) != input_length:
-            print("Length Mistmatch")
-            return "Test Failed"
-        
-        #XOR the strings to get number of mismatched bits
-        difference_array = np.bitwise_xor(flat_array_1, flat_array_2)
-        
-        #compute the HD and then the FHD
-        hamming_distance = np.sum(difference_array)
-        fractional_hd = hamming_distance/input_length
-        
+            raise ValueError("Length Mismatch")
+
         #return FHD
-        return fractional_hd
+        return hamming(flat_array_1, flat_array_2)
     
     def inter_array_FHD_test(devices, tested_index = 0):
         """
         Parameters
         ----------
         devices : Array
-            Array of read values for eachd evice.
+            Array of read values for each device.
         tested_index : Integer, optional
             DESCRIPTION. The index of the device to be tested. Default is the first device in devices.
 
@@ -52,19 +45,18 @@ class FHD:
         """
         no_of_devices = len(devices)
         device_length = len(devices[0].flatten())
+
         #makes a list of FHD scores for tested device against other devices
-        FHD_scores = []
-        for i in range(no_of_devices):
-            if i != tested_index:
-                FHD_scores.append(FHD.inter_array_FHD(devices[tested_index], devices[i]))
+        FHD_scores = np.array([FHD.inter_array_FHD(devices[tested_index], devices[i]) 
+                               for i in range(no_of_devices) if i != tested_index
+                            ])
+        
         #compute chi^2 statistic:
-        chi_squared_sum = 0
-        for FHD_score in FHD_scores:
-            square_value = (FHD_score - 0.5)**2
-            chi_squared_sum += square_value
-        chi_squared_value = (4*device_length*chi_squared_sum)
+        squared_distances = (FHD_scores - 0.5) ** 2
+        chi_squared = 4 * device_length * squared_distances.sum()
+        
         #get p value using the incomplete gamma function
-        p_value = gammaincc((no_of_devices - 1)/2, chi_squared_value/2)
+        p_value = gammaincc((no_of_devices - 1) / 2, chi_squared / 2)
         return p_value
         
     

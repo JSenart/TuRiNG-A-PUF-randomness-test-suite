@@ -1,0 +1,18 @@
+There were 200 devices in the dataset 
+The p-value for tests was 0.01
+FHD Test: 137 devices out of 200 passed 
+
+Randomness test pass counts (row order) at p-value 0.01: 
+Monobit Test: 194 of 200, chi = 0.35048521232336094 
+Approximate Entropy: 198 of 200, chi = 0.13728235312658452 
+Cumulative Sums: 196 of 200, chi = 0.4190211666101928 
+Block Frequency: 197 of 200, chi = 0.5955485072842062 
+Runs Test: 197 of 200, chi = 0.5141236202310755 
+Longest Run of Ones: 199 of 200, chi = 0.35864134122843816 
+DFT: 193 of 200, chi = 0.048715976147641296 
+Template Matching (fixed template): 197 of 200, chi = 0.8977625971214902 
+Binary Matrix Rank Test: 197 of 200, chi = 0.008878977453844982 
+Serial: 196 of 200, chi = 0.18656597485845106 
+Serial Variant: 195 of 200, chi = 0.1334041322004151 
+
+The p-values are written as arrays by Main for more information e.g. for running tests for uniformity

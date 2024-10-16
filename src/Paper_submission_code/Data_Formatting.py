@@ -3,6 +3,18 @@ import numpy as np
 from scipy.stats import bernoulli
 
 class Data_formatting:
+    @staticmethod
+    def string_to_array(b_str):
+        """
+        Time optimized method to convert a string of 1s ans 0s into an array.
+
+        Args:
+            b_str (_string_): string of the type "1010001010" to be converted to an array
+
+        Returns:
+            ndarray: numpy array containing information in the input string e.g. [1 0 1 0 0 0 1 0 1 0]
+        """
+        return np.frombuffer(b_str.encode("ascii"), dtype="u1") - 48
     
     @staticmethod
     def array_to_string(array):

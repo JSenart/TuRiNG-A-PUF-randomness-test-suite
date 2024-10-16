@@ -1,0 +1,5 @@
+There were 100 devices in the dataset 
+The p-value for tests was 0.01
+FHD Test: 96 devices out of 100 passed 
+
+The p-values are written as arrays by Main for more information e.g. for running tests for uniformity

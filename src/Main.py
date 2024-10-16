@@ -12,8 +12,8 @@ from Paper_submission_code.chi_sq_testing_paper import *
 
 #%%User Input Choices
 #data input file, results output file, 
-data_file_name = "Paper_submission_code/example_4096_data"
-results_file_name = "Paper_submission_code/4096_example_output.txt"
+data_file_name = "keys_.txt"
+results_file_name = "output.txt"
 #block size choices b1 and b2; relatively safe to leave these as 4.
 b1 = 4
 b2 = 4
@@ -22,8 +22,10 @@ b2 = 4
 p_value = 0.01
 
 #%%Put the data you want here
-file = open(data_file_name, "rb")
-data = np.load(file, allow_pickle = True)
+data = np.loadtxt(data_file_name, dtype=str)
+data = np.array([Data_formatting.string_to_array(b) for b in data])
+# file = open(data_file_name, "rb")
+# data = np.load(file, allow_pickle = True)
 
 #extract some helpful parameters
 number_of_devices = len(data)
